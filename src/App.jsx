@@ -161,7 +161,7 @@ export default function App() {
       <header className="topbar">
         <div className="brand-lockup">
           <div className="brand-mark"><Clover /></div>
-          <div><p className="eyebrow">EDUARVEN PRESENTA</p><h1>LOTTO <span>ACTIVO</span></h1><p className="tagline">LA SUERTE ESTÁ DE TU LADO</p></div>
+          <div><p className="eyebrow">EDUARVEN PRESENTA</p><h1>EDUARVEN <span>SPINNER</span></h1><p className="tagline">LA SUERTE ESTÁ DE TU LADO</p></div>
         </div>
         <div className="top-actions">
           <div className="count-badge"><strong>38</strong><span>ANIMALITOS</span></div>
@@ -170,51 +170,51 @@ export default function App() {
       </header>
 
       <section className="hero-grid">
-        <aside className="side-card left-card"><div className="side-icon">✦</div><p className="script-copy">¡Gira,<br/>descubre y<br/><em>gana!</em></p><div className="side-rule"/><p className="side-small">38 oportunidades<br/>para probar tu suerte</p><div className="coin-stack"><span>✿</span><span>✿</span><span>✿</span></div></aside>
+        <aside className="side-card left-card"><div className="side-icon">✦</div><p className="script-copy">¡Gira,<br />descubre y<br /><em>gana!</em></p><div className="side-rule" /><p className="side-small">38 oportunidades<br />para probar tu suerte</p><div className="coin-stack"><span>✿</span><span>✿</span><span>✿</span></div></aside>
 
         <section className="game-area" aria-label="Ruleta de 38 animalitos">
-          <div className="wheel-heading"><span className="live-dot"/> RULETA EN VIVO <span className="heading-line"/></div>
+          <div className="wheel-heading"><span className="live-dot" /> RULETA EN VIVO <span className="heading-line" /></div>
           <div className="wheel-wrap">
-            <div className="wheel-halo"/>
-            <div className="wheel-rim rim-outer"><div className="rim-lights">{Array.from({length:38},(_,i)=><i key={i} style={{transform:`rotate(${i*360/38}deg) translateY(-1px)`}}/>)}</div></div>
-            <div className="pointer"><span/></div>
-            <div className={`wheel-disc ${spinning ? "is-spinning" : ""}`} style={{transform:`rotate(${rotation}deg)`}}>
+            <div className="wheel-halo" />
+            <div className="wheel-rim rim-outer"><div className="rim-lights">{Array.from({ length: 38 }, (_, i) => <i key={i} style={{ transform: `rotate(${i * 360 / 38}deg) translateY(-1px)` }} />)}</div></div>
+            <div className="pointer"><span /></div>
+            <div className={`wheel-disc ${spinning ? "is-spinning" : ""}`} style={{ transform: `rotate(${rotation}deg)` }}>
               <svg viewBox="0 0 600 600" role="img" aria-label="Ruleta con 38 sectores numerados">
-                <circle cx="300" cy="300" r="297" fill="#d6a83f"/>
-                {animals.map((animal,i)=>{
-                  const green=i<2; const red=i>=2 && i%2===0;
-                  const fill=green?"#079a42":red?"#bd202c":"#111719";
-                  const angle=-90+(i+.5)*STEP;
-                  return <g key={animal.number}><path d={sectorPath(i)} fill={fill} stroke="#f2cb69" strokeWidth="2.2"/><path d={sectorPath(i)} fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="1"/><g transform={`rotate(${angle+90} 300 300)`}><text x="300" y="77" textAnchor="middle" className="wheel-number" fontSize={animal.number.length>1?20:23}>{animal.number}</text><text x="300" y="105" textAnchor="middle" fontSize="22">{animal.emoji}</text></g></g>;
+                <circle cx="300" cy="300" r="297" fill="#d6a83f" />
+                {animals.map((animal, i) => {
+                  const green = i < 2; const red = i >= 2 && i % 2 === 0;
+                  const fill = green ? "#079a42" : red ? "#bd202c" : "#111719";
+                  const angle = -90 + (i + .5) * STEP;
+                  return <g key={animal.number}><path d={sectorPath(i)} fill={fill} stroke="#f2cb69" strokeWidth="2.2" /><path d={sectorPath(i)} fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="1" /><g transform={`rotate(${angle + 90} 300 300)`}><text x="300" y="77" textAnchor="middle" className="wheel-number" fontSize={animal.number.length > 1 ? 20 : 23}>{animal.number}</text><text x="300" y="105" textAnchor="middle" fontSize="22">{animal.emoji}</text></g></g>;
                 })}
-                <circle cx="300" cy="300" r="75" fill="#03180e" stroke="#f6d26d" strokeWidth="9"/>
-                <circle cx="300" cy="300" r="62" fill="#07552d" stroke="#23e96c" strokeWidth="3"/>
-                <path d="M300 260 C278 242 258 261 272 282 C281 296 296 300 300 301 C304 300 319 296 328 282 C342 261 322 242 300 260Z" fill="#09bd50" stroke="#001d0c" strokeWidth="3"/>
-                <path d="M300 300 Q299 318 282 330 M300 300 Q315 315 326 330" fill="none" stroke="#001d0c" strokeWidth="3"/>
+                <circle cx="300" cy="300" r="75" fill="#03180e" stroke="#f6d26d" strokeWidth="9" />
+                <circle cx="300" cy="300" r="62" fill="#07552d" stroke="#23e96c" strokeWidth="3" />
+                <path d="M300 260 C278 242 258 261 272 282 C281 296 296 300 300 301 C304 300 319 296 328 282 C342 261 322 242 300 260Z" fill="#09bd50" stroke="#001d0c" strokeWidth="3" />
+                <path d="M300 300 Q299 318 282 330 M300 300 Q315 315 326 330" fill="none" stroke="#001d0c" strokeWidth="3" />
                 <text x="300" y="352" textAnchor="middle" fill="#fff" fontSize="19" fontWeight="900" letterSpacing="1">EDUARVEN</text>
               </svg>
             </div>
-            <div className="wheel-center-glow"/>
+            <div className="wheel-center-glow" />
           </div>
           <div className="spin-controls">
             <span className="chevron">‹‹</span>
-            <button className="spin-button" onClick={spin} disabled={spinning}><span className={spinning?"button-spinner":"button-arrow"}>{spinning?"◌":"↻"}</span><span>{spinning?"GIRANDO...":"¡GIRAR RULETA!"}</span><b>✦</b></button>
+            <button className="spin-button" onClick={spin} disabled={spinning}><span className={spinning ? "button-spinner" : "button-arrow"}>{spinning ? "◌" : "↻"}</span><span>{spinning ? "GIRANDO..." : "¡GIRAR RULETA!"}</span><b>✦</b></button>
             <span className="chevron">››</span>
           </div>
-          <p className="spin-hint">{spinning?"LA SUERTE ESTÁ EN MOVIMIENTO":"PRESIONA PARA DESCUBRIR TU ANIMALITO"}</p>
+          <p className="spin-hint">{spinning ? "LA SUERTE ESTÁ EN MOVIMIENTO" : "PRESIONA PARA DESCUBRIR TU ANIMALITO"}</p>
         </section>
 
-        <aside className="side-card right-card"><div className="side-title">✧ TU SUERTE ✧</div><div className="feature"><span>✓</span><p><b>Juego justo</b><small>Selección aleatoria</small></p></div><div className="feature"><span>⚡</span><p><b>Giro dinámico</b><small>Animación fluida</small></p></div><div className="feature"><span>🏆</span><p><b>¡Mucha suerte!</b><small>Que gane tu favorito</small></p></div><div className="pot">🪙<span>LA FORTUNA<br/>TE ESPERA</span></div></aside>
+        <aside className="side-card right-card"><div className="side-title">✧ TU SUERTE ✧</div><div className="feature"><span>✓</span><p><b>Juego justo</b><small>Selección aleatoria</small></p></div><div className="feature"><span>⚡</span><p><b>Giro dinámico</b><small>Animación fluida</small></p></div><div className="feature"><span>🏆</span><p><b>¡Mucha suerte!</b><small>Que gane tu favorito</small></p></div><div className="pot">🪙<span>LA FORTUNA<br />TE ESPERA</span></div></aside>
       </section>
 
-      <section className={`result-panel ${winner?"has-winner":""}`} aria-live="polite">
+      <section className={`result-panel ${winner ? "has-winner" : ""}`} aria-live="polite">
         <div className="result-animal">{winner?.emoji || "🍀"}</div>
-        <div className="result-number"><span>{winner?"RESULTADO":"TU RESULTADO"}</span><strong>{winner?.number ?? "—"}</strong><b>{winner?.name ?? "Aún por descubrir"}</b></div>
-        <div className="result-message"><span>✦</span><p>¡Espero tengas<br/><em>mucha suerte!</em></p><Clover className="result-clover"/></div>
+        <div className="result-number"><span>{winner ? "RESULTADO" : "TU RESULTADO"}</span><strong>{winner?.number ?? "—"}</strong><b>{winner?.name ?? "Aún por descubrir"}</b></div>
+        <div className="result-message"><span>✦</span><p>¡Espero tengas<br /><em>mucha suerte!</em></p><Clover className="result-clover" /></div>
       </section>
 
-      <section className="history-panel"><div className="history-title"><span>ÚLTIMOS RESULTADOS</span><small>HISTORIAL DE ESTA SESIÓN</small></div><div className="history-items">{history.length?history.map((item,i)=><div className="history-chip" key={`${item.number}-${i}`}><span>{item.emoji}</span><b>{item.number}</b><small>{item.name}</small></div>):<p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}</div></section>
-      <footer><Clover className="footer-clover"/><span>EDUARVEN LUCKY</span><i/> EXPERIENCIA DE JUEGO RECREATIVA <i/> 38 ANIMALITOS</footer>
+      <section className="history-panel"><div className="history-title"><span>ÚLTIMOS RESULTADOS</span><small>HISTORIAL DE ESTA SESIÓN</small></div><div className="history-items">{history.length ? history.map((item, i) => <div className="history-chip" key={`${item.number}-${i}`}><span>{item.emoji}</span><b>{item.number}</b><small>{item.name}</small></div>) : <p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}</div></section>
+      <footer><Clover className="footer-clover" /><span>SPINNER LUCKY EDUARVEN</span><i /> EXPERIENCIA DE JUEGO RECREATIVA <i /> 38 ANIMALITOS</footer>
     </div>
   </main>;
 }
