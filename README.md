@@ -1,12 +1,12 @@
-# Lotto Activo — Gaming Casino Premium
+# Eduarven Lucky — Lotto Activo Premium
 
-Aplicación recreativa construida con React, Vite y Tailwind CSS 4. Incluye ruleta SVG de 38 sectores, puntero fijo, animación con desaceleración, resultado sincronizado, historial de cinco giros y efectos de sonido opcionales mediante Web Audio.
+Ruleta recreativa responsive de 38 animalitos, creada con React, Vite y Tailwind CSS 4. Incluye giro con desaceleración, puntero fijo, sonido sintetizado con Web Audio API (sin archivos externos), control de sonido e historial de los últimos cinco resultados.
 
 ## Requisitos
-- Node.js 18.18+ (recomendado Node 20+)
+- Node.js 20.19+ o 22.12+ recomendado
 - npm
 
-## Ejecutar en desarrollo
+## Desarrollo
 ```bash
 npm install
 npm run dev
@@ -18,11 +18,9 @@ npm run build
 npm run preview
 ```
 
-## Estructura
-- `src/App.jsx`: datos de animalitos, geometría SVG, lógica de giro e interfaz.
-- `src/style.css`: estilos responsive, animaciones y directivas Tailwind.
-- `public/logo-clover.png`: trébol suministrado, con el patrón de cuadros gris retirado.
-- `public/concept-preview.png`: referencia visual del concepto Gaming Casino Premium.
+## Publicar en Vercel
+Importa el repositorio de GitHub y usa: Framework **Vite**, Build Command `npm run build`, Output Directory `dist`, Install Command `npm install`.
 
-## Nota sobre los datos
-Los 38 animalitos están definidos en el arreglo `ANIMALS` al inicio de `src/App.jsx`, para que puedas editar nombres o emojis fácilmente. Verifica la nomenclatura con la tabla oficial vigente antes de publicar. Esta ruleta selecciona resultados aleatorios para entretenimiento; no predice ni reproduce sorteos oficiales.
+El sonido se genera localmente con Web Audio API y se activa al presionar Girar (los navegadores requieren una interacción del usuario).
+
+La ruleta es recreativa: no predice ni reproduce sorteos oficiales.
