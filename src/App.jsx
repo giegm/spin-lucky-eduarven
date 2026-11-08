@@ -62,8 +62,8 @@ function Wheel({ rotation, spinning, onTransitionEnd }) {
           <circle cx="300" cy="300" r="78" fill="#061a11" stroke="#f4d17b" strokeWidth="9" />
           <circle cx="300" cy="300" r="65" fill="#0b3b25" stroke="#21d66a" strokeWidth="2" />
           <image href="/logo-clover.png" x="271" y="248" width="58" height="49" preserveAspectRatio="xMidYMid meet" />
-          <text x="300" y="321" textAnchor="middle" className="wheel-brand">LOTTO</text>
-          <text x="300" y="344" textAnchor="middle" className="wheel-brand gold">ACTIVO</text>
+          <text x="300" y="321" textAnchor="middle" className="wheel-brand">EDUARVEN</text>
+          <text x="300" y="344" textAnchor="middle" className="wheel-brand gold">SPINNER</text>
         </svg>
       </div>
     </div>
@@ -135,7 +135,7 @@ export default function App() {
         <header className="topbar">
           <a className="brand" href="#inicio" aria-label="Lotto Activo inicio">
             <span className="brand-logo"><img src="/logo-clover.png" alt="Trébol Lotto Activo" /></span>
-            <span><b>LOTTO <i>ACTIVO</i></b><small>LA SUERTE ESTÁ DE TU LADO</small></span>
+            <span><b>EDUARVEN <i>SPINNER</i></b><small>LA SUERTE ESTÁ DE TU LADO</small></span>
           </a>
           <div className="top-actions">
             <span className="live-pill"><span /> RULETA EN VIVO</span>
@@ -147,7 +147,7 @@ export default function App() {
 
         <section className="hero" id="inicio">
           <div className="hero-copy">
-            <div className="eyebrow"><Sparkles size={15} /> EXPERIENCIA GAMING CASINO</div>
+            <div className="eyebrow"><Sparkles size={15} /> EXPERIENCIA GAMING</div>
             <h1>LA SUERTE<br /><span>GIRA CONTIGO.</span></h1>
             <p>38 animalitos. Una oportunidad. Deja que la ruleta elija tu próximo número.</p>
             <div className="feature-row">
@@ -208,7 +208,7 @@ export default function App() {
           </aside>
         </section>
 
-        <footer className="footer"><span><Coins size={16} /> LOTTO ACTIVO</span><span>JUEGA CON RESPONSABILIDAD</span><span><AudioLines size={16} /> GAMING EXPERIENCE</span></footer>
+        <footer className="footer"><span><Coins size={16} /> EDUARVEN </span><span>JUEGA CON RESPONSABILIDAD</span><span><AudioLines size={16} /> GAMING EXPERIENCE</span></footer>
       </div>
     </main>
   );
