@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Fireworks from "./Fireworks";
 
 const animals = [
   { number: "0", name: "Delfín", emoji: "🐬" },
@@ -428,6 +429,9 @@ export default function App() {
             aria-modal="true"
             aria-label="Resultado ganador"
           >
+            {/* Fuegos artificiales y confeti */}
+            <Fireworks />
+
             <div className="winner-popup">
 
               <div className="winner-header">

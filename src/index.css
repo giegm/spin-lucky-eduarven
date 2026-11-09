@@ -1290,3 +1290,36 @@ footer i {
     animation-duration: .01ms !important;
   }
 }
+
+.winner-overlay {
+  position: fixed;
+  isolation: isolate;
+}
+
+.fireworks-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* La tarjeta siempre queda delante */
+.winner-popup {
+  position: relative;
+  z-index: 2;
+}
+
+/* El fondo permanece detrás de todo */
+.winner-overlay {
+  background: rgba(0, 10, 4, 0.82);
+}
+
+/* Reducir efectos en dispositivos con
+   preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .fireworks-canvas {
+    display: none;
+  }
+}
