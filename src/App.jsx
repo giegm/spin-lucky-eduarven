@@ -214,6 +214,10 @@ function useWheelSound(enabled) {
 }
 
 export default function App() {
+  const [showWinner, setShowWinner] = useState(false);
+  const [winnerExiting, setWinnerExiting] = useState(false);
+  const winnerTimerRef = useRef(null);
+  const winnerExitTimerRef = useRef(null);
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(null);
@@ -228,7 +232,13 @@ export default function App() {
     const index = Math.floor(Math.random() * animals.length);
     const chosen = animals[index];
     selectedRef.current = chosen;
+    clearTimeout(winnerTimerRef.current);
+    clearTimeout(winnerExitTimerRef.current);
+
+    setShowWinner(false);
+    setWinnerExiting(false);
     setWinner(null);
+
     setSpinning(true);
     sound.start();
 
@@ -244,12 +254,31 @@ export default function App() {
 
   const finishSpin = (event) => {
     if (event.propertyName !== "transform" || !spinning) return;
+
     sound.stop();
     sound.win();
+
     const selected = selectedRef.current;
+
     setWinner(selected);
     setHistory((old) => [selected, ...old].slice(0, 5));
     setSpinning(false);
+
+    // Mostrar celebración
+    setWinnerExiting(false);
+    setShowWinner(true);
+
+    // Comenzar desaparición después de 4.3 segundos
+    winnerTimerRef.current = window.setTimeout(() => {
+      setWinnerExiting(true);
+    }, 6300);
+
+    // Retirar el resultado después de 5 segundos
+    winnerExitTimerRef.current = window.setTimeout(() => {
+      setShowWinner(false);
+      setWinner(null);
+      setWinnerExiting(false);
+    }, 7000);
   };
 
   const wheelPockets = animals.map((animal, index) => {
@@ -382,7 +411,7 @@ export default function App() {
           </aside>
         </section>
 
-        <section className={`result-panel ${winner ? "has-winner" : ""}`} aria-live="polite">
+        {/*<section className={`result-panel ${winner ? "has-winner" : ""}`} aria-live="polite">
           <div className="result-animal">{winner?.emoji || <Clover className="result-clover" />}</div>
           <div className="result-number">
             <span>{winner ? "RESULTADO" : "TU RESULTADO"}</span>
@@ -390,7 +419,38 @@ export default function App() {
             <b>{winner?.name ?? "Aún por descubrir"}</b>
           </div>
           <div className="result-message"><span>✦</span><p>¡Espero tengas<br /><em>mucha suerte!</em></p></div>
-        </section>
+        </section>*/}
+        {showWinner && winner && (
+          <div
+            className={`winner-overlay ${winnerExiting ? "is-exiting" : ""
+              }`}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Resultado ganador"
+          >
+            <div className="winner-popup">
+
+              <div className="winner-header">
+                ✦ ¡TENEMOS GANADOR! ✦
+              </div>
+
+              <div className="result-animal">{winner?.emoji || <Clover className="result-clover" />}</div>
+
+              <div className="result-number winner-number">
+                <span>RESULTADO GANADOR</span>
+                <strong>{winner.number}</strong>
+                <b>{winner.name}</b>
+              </div>
+
+              <div className="result-message">
+                <span>✦</span>
+                <p>¡Espero tengas mucha suerte!</p>
+                <Clover className="result-clover" />
+              </div>
+
+            </div>
+          </div>
+        )}
 
         <section className="history-panel">
           <div className="history-title"><span>ÚLTIMOS RESULTADOS</span><small>HISTORIAL</small></div>
