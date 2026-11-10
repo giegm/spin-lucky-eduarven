@@ -42,7 +42,56 @@ const animals = [
   { number: "36", name: "Culebra", emoji: "🐍" },
 ];
 
-const STEP = 360 / animals.length;
+const wheelOrder = [
+  // Sector A
+  "35", "14", "2", "0", "28", "9", "26",
+  // Sector B
+  "30", "11", "7", "20", "32", "17",
+  // Sector C
+  "5", "22", "34", "15", "3", "24",
+  // Sector D
+  "36", "13", "1", "00", "27", "10", "25",
+  // Sector E
+  "29", "12", "8", "19", "31", "18",
+  // Sector F
+  "6", "21", "33", "16", "4", "23"
+];
+
+const redNumbers = new Set([
+  "1", "3", "5", "7", "9",
+  "12", "14", "16", "18", "19",
+  "21", "23", "25", "27", "30",
+  "32", "34", "36"
+]);
+
+const blackNumbers = new Set([
+  "2", "4", "6", "8", "10",
+  "11", "13", "15", "17", "20",
+  "22", "24", "26", "28", "29",
+  "31", "33", "35"
+]);
+
+const wheelAnimals = wheelOrder.map((number) => {
+  const animal = animals.find(
+    (item) => String(item.number) === number
+  );
+
+  if (!animal) {
+    throw new Error(`Animalito no encontrado: ${number}`);
+  }
+
+  return {
+    ...animal,
+    color:
+      number === "0" || number === "00"
+        ? "green"
+        : redNumbers.has(number)
+          ? "red"
+          : "black"
+  };
+});
+
+const STEP = 360 / wheelAnimals.length;
 const polar = (r, deg) => {
   const a = (deg * Math.PI) / 180;
   return { x: 300 + r * Math.cos(a), y: 300 + r * Math.sin(a) };
@@ -230,9 +279,16 @@ export default function App() {
 
   const spin = () => {
     if (spinning) return;
-    const index = Math.floor(Math.random() * animals.length);
-    const chosen = animals[index];
+
+    const index = Math.floor(
+      Math.random() * wheelAnimals.length
+    );
+
+    // Seleccionar el animalito correspondiente al índice
+    const chosen = wheelAnimals[index];
+
     selectedRef.current = chosen;
+
     clearTimeout(winnerTimerRef.current);
     clearTimeout(winnerExitTimerRef.current);
 
@@ -245,10 +301,16 @@ export default function App() {
 
     // El centro del sector elegido se alinea con el puntero fijo de las 12.
     const target = ((-(index + 0.5) * STEP) % 360 + 360) % 360;
+
     const current = ((rotationRef.current % 360) + 360) % 360;
+
     const correction = (target - current + 360) % 360;
+
     const turns = 7 + Math.floor(Math.random() * 3);
-    const finalRotation = rotationRef.current + turns * 360 + correction;
+
+    const finalRotation =
+      rotationRef.current + turns * 360 + correction;
+
     rotationRef.current = finalRotation;
     setRotation(finalRotation);
   };
@@ -282,22 +344,67 @@ export default function App() {
     }, 7000);
   };
 
-  const wheelPockets = animals.map((animal, index) => {
-    const isGreen = index < 2;
-    const isRed = !isGreen && index % 2 === 0;
-    const fill = isGreen ? "#087c3c" : isRed ? "#b51d27" : "#111a18";
+  const wheelPockets = wheelAnimals.map((animal, index) => {
+    const isGreen = animal.color === "green";
+    const isRed = animal.color === "red";
+
+    const fill = isGreen
+      ? "#087c3c"
+      : isRed
+        ? "#b51d27"
+        : "#111a18";
+
     const center = -90 + (index + 0.5) * STEP;
+
     const numberPoint = polar(238, center);
     const animalPoint = polar(178, center);
+
     return (
       <g key={animal.number}>
-        <path d={ringSector(index, 211, 265)} fill={fill} stroke="#e8c36c" strokeWidth="1.8" />
-        <path d={ringSector(index, 146, 211)} fill="#08783b" stroke="#c99b3d" strokeWidth="1.2" />
-        <g transform={`rotate(${center + 90} ${numberPoint.x} ${numberPoint.y})`}>
-          <text x={numberPoint.x} y={numberPoint.y + 7} textAnchor="middle" className="roulette-number" fontSize={animal.number.length > 1 ? 21 : 25}>{animal.number}</text>
+        {/* Casilla numerada con su color correspondiente */}
+        <path
+          d={ringSector(index, 211, 265)}
+          fill={fill}
+          stroke="#e8c36c"
+          strokeWidth="1.8"
+        />
+
+        {/* Anillo interior */}
+        <path
+          d={ringSector(index, 146, 211)}
+          fill="#08783b"
+          stroke="#c99b3d"
+          strokeWidth="1.2"
+        />
+
+        {/* Número */}
+        <g
+          transform={`rotate(${center + 90} ${numberPoint.x} ${numberPoint.y})`}
+        >
+          <text
+            x={numberPoint.x}
+            y={numberPoint.y + 7}
+            textAnchor="middle"
+            className="roulette-number"
+            fontSize={animal.number.length > 1 ? 21 : 25}
+          >
+            {animal.number}
+          </text>
         </g>
-        <g transform={`rotate(${center + 90} ${animalPoint.x} ${animalPoint.y})`}>
-          <text x={animalPoint.x} y={animalPoint.y + 7} textAnchor="middle" className="roulette-animal" fontSize="23">{animal.emoji}</text>
+
+        {/* Animalito */}
+        <g
+          transform={`rotate(${center + 90} ${animalPoint.x} ${animalPoint.y})`}
+        >
+          <text
+            x={animalPoint.x}
+            y={animalPoint.y + 7}
+            textAnchor="middle"
+            className="roulette-animal"
+            fontSize="23"
+          >
+            {animal.emoji}
+          </text>
         </g>
       </g>
     );
