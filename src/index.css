@@ -1361,3 +1361,523 @@ footer i {
   object-fit: contain;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
 }
+
+/* Selector premium de modalidades */
+.mode-selector {
+  width: min(900px, 100%);
+  margin: clamp(24px, 7vh, 72px) auto 50px;
+  padding: clamp(24px, 5vw, 48px);
+  text-align: center;
+  border: 1px solid #b58a3c;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at 50% 0%, #285b32 0, #20150b 58%, #100b07 100%);
+  box-shadow: 0 0 0 4px #4a3214, 0 18px 55px #0009, inset 0 0 35px #e5b84a12;
+}
+
+.mode-kicker {
+  color: #f2cd67;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: .28em;
+}
+
+.mode-selector h2 {
+  margin: 12px 0 6px;
+  color: #ffe7a0;
+  font-size: clamp(26px, 5vw, 42px);
+  letter-spacing: .06em;
+  text-shadow: 0 3px 12px #000;
+}
+
+.mode-selector>p {
+  margin: 0;
+  color: #c9b58f;
+  font-size: 13px;
+}
+
+.mode-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.mode-card {
+  display: flex;
+  min-height: 235px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px 16px;
+  border: 2px solid #b58a3c;
+  border-radius: 18px;
+  color: #fff2d1;
+  background: linear-gradient(155deg, #285b32, #12351e 55%, #211307);
+  box-shadow: inset 0 2px 12px #fff2, 0 8px 20px #0008;
+  cursor: pointer;
+  transition: transform .2s, filter .2s, box-shadow .2s;
+}
+
+.mode-card:hover {
+  transform: translateY(-5px);
+  filter: brightness(1.12);
+  box-shadow: 0 12px 28px #000a, 0 0 20px #d8aa4b35;
+}
+
+.mode-number {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  border: 3px solid #f4d57c;
+  border-radius: 50%;
+  color: #ffe18a;
+  background: radial-gradient(circle, #6b461b, #211307);
+  font-size: 30px;
+  font-weight: 1000;
+  box-shadow: 0 0 18px #e2b64b55;
+}
+
+.mode-card strong {
+  color: #ffdf82;
+  font-size: clamp(16px, 2.5vw, 22px);
+  letter-spacing: .05em;
+}
+
+.mode-card small {
+  color: #d6c4a2;
+  font-size: 11px;
+}
+
+.mode-card>b {
+  margin-top: 6px;
+  padding: 11px 16px;
+  border: 1px solid #f6dc8b;
+  border-radius: 999px;
+  color: white;
+  background: linear-gradient(#37934a, #0d4822);
+  font-size: 11px;
+  letter-spacing: .06em;
+  box-shadow: 0 4px 0 #603e16;
+}
+
+.mode-toolbar {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.back-mode {
+  padding: 10px 17px;
+  border: 1px solid #bd9144;
+  border-radius: 999px;
+  color: #f7d77d;
+  background: linear-gradient(145deg, #38230f, #160e08);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  cursor: pointer;
+}
+
+.back-mode:hover,
+.mini-mode-button:hover {
+  filter: brightness(1.2);
+}
+
+.mini-mode-button {
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 3px solid #f9df83;
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(180deg, #3c9b4d 0%, #17632c 48%, #0a3a1b 100%);
+  box-shadow: inset 0 3px 7px #d6f2a0, inset 0 -8px 12px #062b13, 0 5px 0 #704718, 0 9px 22px #0008;
+  padding: 9px 10px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+
+.guacharo-screen {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.guacharo-screen>.back-mode {
+  margin-bottom: 18px;
+}
+
+.guacharo-wrap {
+  width: min(100%, 620px);
+  margin: 14px auto 0;
+}
+
+.guacharo-disc {
+  transition-duration: 8.2s;
+}
+
+.guacharo-disc svg {
+  overflow: visible;
+  filter: drop-shadow(0 10px 18px #0009);
+}
+
+.guacharo-number {
+  fill: #fff4d8;
+  font-size: 11px;
+  font-weight: 1000;
+  paint-order: stroke;
+  stroke: #281609;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+  letter-spacing: -.35px;
+}
+
+.guacharo-center-kicker {
+  fill: #f4d889;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+.guacharo-center-number {
+  fill: #fff0a7;
+  font-size: 82px;
+  font-weight: 1000;
+  paint-order: stroke;
+  stroke: #6b461b;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 3px 3px #0009);
+}
+
+.guacharo-result {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  width: min(300px, 90%);
+  margin: 24px auto 0;
+  padding: 17px;
+  border: 1px solid #c99b35;
+  border-radius: 16px;
+  background: linear-gradient(110deg, #100a06, #2b1b0d, #100a06);
+  box-shadow: 0 0 22px #dba62e25;
+}
+
+.guacharo-result span {
+  color: #f2d46d;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .2em;
+}
+
+.guacharo-result strong {
+  color: #fff;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.guacharo-result b {
+  color: #f0dfc2;
+  font-size: 17px;
+}
+
+@media (max-width: 600px) {
+  .mode-selector {
+    margin-top: 24px;
+    padding: 25px 16px;
+  }
+
+  .mode-options {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .mode-card {
+    min-height: 205px;
+  }
+
+  .guacharo-wrap {
+    width: min(100%, 96vw);
+  }
+
+  .guacharo-number {
+    font-size: 9px;
+    stroke-width: 2px;
+  }
+
+  .guacharo-center-kicker {
+    font-size: 13px;
+    letter-spacing: 3px;
+  }
+
+  .guacharo-center-number {
+    font-size: 76px;
+  }
+}
+
+
+/* Animalitos en ambos anillos de Guácharo Activo */
+.guacharo-animal-icon {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  paint-order: normal;
+  stroke: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .8));
+}
+
+.guacharo-history-animal {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.guacharo-winner-art {
+  position: relative;
+  overflow: hidden;
+  font-size: 66px;
+}
+
+.guacharo-winner-art>span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.guacharo-winner-art>img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.guacharo-winner-popup .winner-number span {
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .guacharo-animal-icon {
+    font-size: 10px !important;
+  }
+
+  .guacharo-history-animal {
+    width: 32px;
+    height: 32px;
+    font-size: 21px;
+  }
+}
+
+/* Acabado de madera y latón compartido con la ruleta Lotto Activo */
+.guacharo-disc {
+  border-color: #c88d30;
+  background: #351b0b;
+  box-shadow: 0 0 0 2px #f7d98c, 0 0 0 7px #4b2b0d, 0 12px 34px #000c, 0 0 28px #c68c3155;
+}
+
+.guacharo-disc::before {
+  border-color: #f2d17b;
+}
+
+.guacharo-animal-icon {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  paint-order: normal;
+  stroke: none;
+  filter: drop-shadow(0 1px 1px #001b0a);
+}
+
+/* Secuenciador LED exclusivo de Guácharo Activo */
+.guacharo-disc {
+  transition: none !important;
+}
+
+.guacharo-led-active {
+  filter:
+    drop-shadow(0 0 4px #fff7bd) drop-shadow(0 0 9px #ffe45c) drop-shadow(0 0 16px #ffb52e);
+}
+
+.guacharo-led-active path:first-child {
+  stroke: #fff4b0 !important;
+  stroke-width: 4px !important;
+}
+
+.guacharo-led-active path:nth-child(2) {
+  stroke: #fff0a0 !important;
+  stroke-width: 3px !important;
+}
+
+.guacharo-led-active text,
+.guacharo-led-active image {
+  filter: drop-shadow(0 0 4px #fff4a5) drop-shadow(0 0 8px #ffcf39);
+}
+
+@keyframes guacharoLedPulse {
+  from {
+    opacity: .82;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.guacharo-led-active {
+  animation: guacharoLedPulse .22s ease-in-out infinite alternate;
+}
+
+/* El 75 participa en el sorteo desde su medallón central, sin casilla en los anillos. */
+.guacharo-center-led-active {
+  fill: #fff8c9 !important;
+  stroke: #fff0a0 !important;
+  stroke-width: 5px !important;
+  filter:
+    drop-shadow(0 0 5px #fff7bd) drop-shadow(0 0 12px #ffe45c) drop-shadow(0 0 22px #ffb52e) !important;
+}
+
+/* GUACHARITO MILLONARIO — estilos exclusivos */
+.mode-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.millonario-mode-card {
+  background: linear-gradient(155deg, #5a3212, #231307 58%, #11100b);
+  border-color: #e0b84e;
+}
+
+.millonario-mode-card .mode-number {
+  background: radial-gradient(circle, #9a681f, #211307);
+}
+
+.millonario-screen {
+  max-width: 1180px;
+}
+
+.millonario-wrap {
+  width: min(100%, 700px);
+}
+
+.millonario-disc {
+  border-color: #e2bc55;
+  background: #211208;
+  box-shadow: 0 0 0 2px #fff0a5, 0 0 0 7px #53320f, 0 12px 34px #000c, 0 0 32px #d6a33b77;
+}
+
+.millonario-number {
+  fill: #fff8e8;
+  font-size: 12px;
+  font-weight: 1000;
+  paint-order: stroke;
+  stroke: #211208;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
+
+.millonario-animal {
+  font-size: 12px;
+  filter: drop-shadow(0 1px 2px #000);
+}
+
+.millonario-center-number {
+  fill: #fff2b0;
+  font-size: 61px;
+  font-weight: 1000;
+  paint-order: stroke;
+  stroke: #5b3510;
+  stroke-width: 4px;
+}
+
+.millonario-mascot {
+  font-size: 76px;
+}
+
+.millonario-center-name {
+  fill: #fff2bd;
+  font-size: 19px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  paint-order: stroke;
+  stroke: #42230d;
+  stroke-width: 3px;
+}
+
+.millonario-led-active {
+  filter: drop-shadow(0 0 5px #fff7bd) drop-shadow(0 0 12px #ffe45c) drop-shadow(0 0 20px #ffb52e);
+  animation: guacharoLedPulse .2s ease-in-out infinite alternate;
+}
+
+.millonario-led-active path {
+  stroke: #fff3a4 !important;
+  stroke-width: 3px !important;
+}
+
+@media (max-width: 900px) {
+  .mode-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .millonario-wrap {
+    width: min(100%, 620px);
+  }
+}
+
+@media (max-width: 600px) {
+  .millonario-wrap {
+    width: min(100%, 96vw);
+  }
+
+  .millonario-number {
+    font-size: 10px;
+  }
+
+  .millonario-animal {
+    font-size: 9px;
+  }
+
+  .millonario-center-number {
+    font-size: 55px;
+  }
+
+  .millonario-mascot {
+    font-size: 65px;
+  }
+
+  .millonario-center-name {
+    font-size: 16px;
+  }
+}
+
+.millonario-center-led-active {
+  filter: drop-shadow(0 0 6px #fff7bd) drop-shadow(0 0 15px #ffe45c) !important;
+}
+
+.mode-logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mode-logos span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.mode-logos img {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
