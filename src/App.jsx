@@ -2,44 +2,44 @@ import { useEffect, useRef, useState } from "react";
 import Fireworks from "./Fireworks";
 
 const animals = [
-  { number: "0", name: "Delfín", emoji: "🐬" },
-  { number: "00", name: "Ballena", emoji: "🐳" },
-  { number: "1", name: "Carnero", emoji: "🐏" },
-  { number: "2", name: "Toro", emoji: "🐂" },
-  { number: "3", name: "Ciempiés", emoji: "🐛" },
-  { number: "4", name: "Alacrán", emoji: "🦂" },
-  { number: "5", name: "León", emoji: "🦁" },
-  { number: "6", name: "Rana", emoji: "🐸" },
-  { number: "7", name: "Perico", emoji: "🦜" },
-  { number: "8", name: "Ratón", emoji: "🐭" },
-  { number: "9", name: "Águila", emoji: "🦅" },
-  { number: "10", name: "Tigre", emoji: "🐯" },
-  { number: "11", name: "Gato", emoji: "🐱" },
-  { number: "12", name: "Caballo", emoji: "🐴" },
-  { number: "13", name: "Mono", emoji: "🐵" },
-  { number: "14", name: "Paloma", emoji: "🕊️" },
-  { number: "15", name: "Zorro", emoji: "🦊" },
-  { number: "16", name: "Oso", emoji: "🐻" },
-  { number: "17", name: "Pavo", emoji: "🦃" },
-  { number: "18", name: "Burro", emoji: "🫏" },
-  { number: "19", name: "Chivo", emoji: "🐐" },
-  { number: "20", name: "Cochino", emoji: "🐷" },
-  { number: "21", name: "Gallo", emoji: "🐓" },
-  { number: "22", name: "Camello", emoji: "🐪" },
-  { number: "23", name: "Cebra", emoji: "🦓" },
-  { number: "24", name: "Iguana", emoji: "🦎" },
-  { number: "25", name: "Gallina", emoji: "🐔" },
-  { number: "26", name: "Vaca", emoji: "🐄" },
-  { number: "27", name: "Perro", emoji: "🐕" },
-  { number: "28", name: "Zamuro", emoji: "🦅" },
-  { number: "29", name: "Elefante", emoji: "🐘" },
-  { number: "30", name: "Caimán", emoji: "🐊" },
-  { number: "31", name: "Lapa", emoji: "🐹" },
-  { number: "32", name: "Ardilla", emoji: "🐿️" },
-  { number: "33", name: "Pescado", emoji: "🐟" },
-  { number: "34", name: "Venado", emoji: "🦌" },
-  { number: "35", name: "Jirafa", emoji: "🦒" },
-  { number: "36", name: "Culebra", emoji: "🐍" },
+  { number: "0", name: "Delfín" },
+  { number: "00", name: "Ballena" },
+  { number: "1", name: "Carnero" },
+  { number: "2", name: "Toro" },
+  { number: "3", name: "Ciempiés" },
+  { number: "4", name: "Alacrán" },
+  { number: "5", name: "León" },
+  { number: "6", name: "Rana" },
+  { number: "7", name: "Perico" },
+  { number: "8", name: "Ratón" },
+  { number: "9", name: "Águila" },
+  { number: "10", name: "Tigre" },
+  { number: "11", name: "Gato" },
+  { number: "12", name: "Caballo" },
+  { number: "13", name: "Mono" },
+  { number: "14", name: "Paloma" },
+  { number: "15", name: "Zorro" },
+  { number: "16", name: "Oso" },
+  { number: "17", name: "Pavo" },
+  { number: "18", name: "Burro" },
+  { number: "19", name: "Chivo" },
+  { number: "20", name: "Cochino" },
+  { number: "21", name: "Gallo" },
+  { number: "22", name: "Camello" },
+  { number: "23", name: "Cebra" },
+  { number: "24", name: "Iguana" },
+  { number: "25", name: "Gallina" },
+  { number: "26", name: "Vaca" },
+  { number: "27", name: "Perro" },
+  { number: "28", name: "Zamuro" },
+  { number: "29", name: "Elefante" },
+  { number: "30", name: "Caimán" },
+  { number: "31", name: "Lapa" },
+  { number: "32", name: "Ardilla" },
+  { number: "33", name: "Pescado" },
+  { number: "34", name: "Venado" },
+  { number: "35", name: "Jirafa" },
+  { number: "36", name: "Culebra" },
 ];
 
 const wheelOrder = [
@@ -396,15 +396,15 @@ export default function App() {
         <g
           transform={`rotate(${center + 90} ${animalPoint.x} ${animalPoint.y})`}
         >
-          <text
-            x={animalPoint.x}
-            y={animalPoint.y + 7}
-            textAnchor="middle"
+          <image
+            href={`/animalitos/${animal.number}.png`}
+            x={animalPoint.x - 15}
+            y={animalPoint.y - 15}
+            width="25"
+            height="25"
+            preserveAspectRatio="xMidYMid meet"
             className="roulette-animal"
-            fontSize="23"
-          >
-            {animal.emoji}
-          </text>
+          />
         </g>
       </g>
     );
@@ -545,7 +545,12 @@ export default function App() {
                 ✦ ¡TENEMOS GANADOR! ✦
               </div>
 
-              <div className="result-animal">{winner?.emoji || <Clover className="result-clover" />}</div>
+              <div className="result-animal">
+                <img
+                  src={`/animalitos/${winner.number}.png`}
+                  alt={winner.name}
+                />
+              </div>
 
               <div className="result-number winner-number">
                 <span>RESULTADO GANADOR</span>
@@ -567,7 +572,16 @@ export default function App() {
           <div className="history-title"><span>ÚLTIMOS RESULTADOS</span><small>HISTORIAL</small></div>
           <div className="history-items">
             {history.length ? history.map((item, i) => (
-              <div className="history-chip" key={`${item.number}-${i}`}><span>{item.emoji}</span><b>{item.number}</b><small>{item.name}</small></div>
+              <div className="history-chip" key={`${item.number}-${i}`}>
+                <span>
+                  <img
+                    src={`/animalitos/${item.number}.png`}
+                    alt={item.name}
+                  />
+                </span>
+                <b>{item.number}</b>
+                <small>{item.name}</small>
+              </div>
             )) : <p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}
           </div>
         </section>
