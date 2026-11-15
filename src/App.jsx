@@ -145,16 +145,23 @@ const guacharoWheelAnimals = [...guacharoOuterAnimals, ...guacharoInnerAnimals];
 const guacharoCenterAnimal = guacharoByNumber.get("75");
 const guacharoDrawAnimals = [...guacharoWheelAnimals, guacharoCenterAnimal];
 
-// Guacharito Millonario: 100 casillas (0, 00 y 01–98) + 99 central.
-// Los números 76–98 conservan su identificación numérica hasta contar con
-// un catálogo oficial de animalitos para esas posiciones.
-const millonarioAnimals = Array.from({ length: 100 }, (_, index) => {
-  const number = index === 0 ? "0" : index === 1 ? "00" : String(index - 1).padStart(2, "0");
-  const known = guacharoByNumber.get(number);
-  return known || { number, name: `Animalito ${number}` };
-});
-const millonarioOuterAnimals = millonarioAnimals.slice(0, 50);
-const millonarioInnerAnimals = millonarioAnimals.slice(50, 100);
+// GUACHARITO MILLONARIO — distribución copiada de la referencia.
+// El orden de estos arreglos es también el orden utilizado por el sorteo y el LED.
+const millonarioOuterOrder = [
+  "0", "28", "09", "26", "30", "11", "07", "20", "32", "17", "05", "22", "34", "15", "03", "24", "36", "13", "01", "00", "21", "10", "25", "29", "12", "08", "19", "31", "18", "06", "27", "33", "16", "04", "23", "35", "14", "02", "75", "53", "37", "48", "83", "94", "63", "76", "50", "81", "78", "89"
+];
+const millonarioInnerOrder = [
+  "92", "61", "38", "40", "85", "69", "43", "58", "41", "88", "55", "72", "49", "68", "98", "73", "80", "57", "67", "86", "95", "56", "51", "44", "84", "93", "64", "42", "54", "74", "97", "77", "60", "45", "79", "87", "90", "96", "46", "39", "52", "59", "66", "91", "70", "82", "65", "47", "62", "71"
+];
+const millonarioAnimalByNumber = new Map(
+  Array.from({ length: 100 }, (_, index) => {
+    const number = index === 0 ? "0" : index === 1 ? "00" : String(index - 1).padStart(2, "0");
+    return [number, guacharoByNumber.get(number) || { number, name: `Animalito ${number}` }];
+  })
+);
+const millonarioOuterAnimals = millonarioOuterOrder.map((number) => millonarioAnimalByNumber.get(number));
+const millonarioInnerAnimals = millonarioInnerOrder.map((number) => millonarioAnimalByNumber.get(number));
+const millonarioAnimals = [...millonarioOuterAnimals, ...millonarioInnerAnimals];
 const millonarioCenterAnimal = { number: "99", name: "Guacharito" };
 const millonarioDrawAnimals = [...millonarioAnimals, millonarioCenterAnimal];
 
@@ -437,6 +444,45 @@ export default function App() {
   const selectedRef = useRef(null);
   const sound = useWheelSound(soundOn);
 
+  // Cambio seguro de modalidad: detiene cualquier giro y limpia sus temporizadores.
+  // Los historiales se conservan; solo se reinicia el estado visual de las ruletas.
+  const changeScreen = (nextScreen) => {
+    sound.stop();
+
+    clearTimeout(winnerTimerRef.current);
+    clearTimeout(winnerExitTimerRef.current);
+    clearTimeout(guacharoLedTimerRef.current);
+    clearTimeout(guacharoPopupTimerRef.current);
+    clearTimeout(guacharoPopupExitTimerRef.current);
+    clearTimeout(millonarioLedTimerRef.current);
+    clearTimeout(millonarioPopupTimerRef.current);
+    clearTimeout(millonarioPopupExitTimerRef.current);
+
+    setSpinning(false);
+    setRotation(0);
+    rotationRef.current = 0;
+    selectedRef.current = null;
+    setShowWinner(false);
+    setWinnerExiting(false);
+    setWinner(null);
+
+    setGuacharoSpinning(false);
+    setGuacharoLedIndex(null);
+    guacharoSelectedRef.current = null;
+    setShowGuacharoPopup(false);
+    setGuacharoPopupExiting(false);
+    setGuacharoWinner(null);
+
+    setMillonarioSpinning(false);
+    setMillonarioLedIndex(null);
+    millonarioSelectedRef.current = null;
+    setShowMillonarioPopup(false);
+    setMillonarioPopupExiting(false);
+    setMillonarioWinner(null);
+
+    setScreen(nextScreen);
+  };
+
   useEffect(() => () => {
     clearTimeout(guacharoPopupTimerRef.current);
     clearTimeout(guacharoPopupExitTimerRef.current);
@@ -641,12 +687,14 @@ export default function App() {
       const a = point(outerRadius, start), b = point(outerRadius, end), c = point(innerRadius, end), d = point(innerRadius, start);
       const numberPoint = point(outerRadius - 15, middle);
       const iconPoint = point((innerRadius + outerRadius) / 2, middle);
-      const fill = animal.number === "0" || animal.number === "00" ? "#087c3c" : (index % 2 === (ringName === "outer" ? 0 : 1) ? "#b51d27" : "#111a18");
+      const fill = animal.number === "0" || animal.number === "00"
+        ? "#087c3c"
+        : ((ringName === "outer" ? index % 2 === 1 : index % 2 === 0) ? "#b51d27" : "#111a18");
       const active = millonarioLedIndex === globalIndex;
       return <g key={`${ringName}-${animal.number}`} className={active ? "millonario-led-active" : ""}>
         <path d={`M ${a.x} ${a.y} A ${outerRadius} ${outerRadius} 0 0 1 ${b.x} ${b.y} L ${c.x} ${c.y} A ${innerRadius} ${innerRadius} 0 0 0 ${d.x} ${d.y} Z`} fill={fill} stroke="#e8c36c" strokeWidth="1.1" />
-        <text x={numberPoint.x} y={numberPoint.y + 3} textAnchor="middle" dominantBaseline="middle" className="millonario-number">{animal.number}</text>
-        <text x={iconPoint.x} y={iconPoint.y + 3} textAnchor="middle" dominantBaseline="middle" className="millonario-animal">{animal.number === "0" || animal.number === "00" ? animalEmoji(animal) : (animal.number <= "75" ? animalEmoji(animal) : "🐾")}</text>
+        <text x={numberPoint.x} y={numberPoint.y + 3} textAnchor="middle" dominantBaseline="middle" transform={`rotate(${middle + 90} ${numberPoint.x} ${numberPoint.y})`} className="millonario-number">{animal.number}</text>
+        <text x={iconPoint.x} y={iconPoint.y + 3} textAnchor="middle" dominantBaseline="middle" transform={`rotate(${middle + 90} ${iconPoint.x} ${iconPoint.y})`} className="millonario-animal">{animal.number === "0" || animal.number === "00" ? animalEmoji(animal) : (animal.number <= "75" ? animalEmoji(animal) : "🐾")}</text>
       </g>;
     });
   };
@@ -687,7 +735,9 @@ export default function App() {
           <path d={sectorPath(pocketInner, outerRadius)} fill={numberFill} stroke="#e8c36c" strokeWidth="1.65" />
           <path d={sectorPath(innerRadius, pocketInner)} fill="#08783b" stroke="#c99b3d" strokeWidth="1.25" />
           <path d={sectorPath(innerRadius, outerRadius)} fill="none" stroke="#fff0bd" strokeOpacity=".16" strokeWidth=".55" />
-          <text x={numberPoint.x} y={numberPoint.y + 3} textAnchor="middle" dominantBaseline="middle" className="guacharo-number">{animal.number}</text>
+          <g transform={`rotate(${middle + 90} ${numberPoint.x} ${numberPoint.y})`}>
+            <text x={numberPoint.x} y={numberPoint.y + 3} textAnchor="middle" dominantBaseline="middle" className="guacharo-number">{animal.number}</text>
+          </g>
           <text x={iconPoint.x} y={iconPoint.y + 4} textAnchor="middle" dominantBaseline="middle" className="guacharo-animal-icon" style={{ fontSize: iconSize }}>{animalEmoji(animal)}</text>
           <image href={`/animalitos/${animalAssetNumber(animal.number)}.png`} x={iconPoint.x - imageSize / 2} y={iconPoint.y - imageSize / 2} width={imageSize} height={imageSize} preserveAspectRatio="xMidYMid meet" />
         </g>
@@ -791,7 +841,7 @@ export default function App() {
             <h2>ELIGE TU RULETA</h2>
             <p>Selecciona la modalidad que deseas jugar</p>
             <div className="mode-options">
-              <button className="mode-card" onClick={() => setScreen("lotto")}>
+              <button className="mode-card" onClick={() => changeScreen("lotto")}>
                 <div className="mode-logos">
                   <span className="mode-number"><img src="/lotto-activo.webp" alt="Lotto Activo" /></span>
                   <span className="mode-number"><img src="/guacharito-millonario.png" alt="Guácharo Activo" /></span>
@@ -799,11 +849,11 @@ export default function App() {
                 </div>
                 <strong>LOTTO ACTIVO</strong><small>La ruleta clásica para Lotto Activo, La Granjita y Selva Plus de 38 animalitos</small><b>RULETA CLÁSICA ↗</b>
               </button>
-              <button className="mode-card" onClick={() => setScreen("guacharo")}>
+              <button className="mode-card" onClick={() => changeScreen("guacharo")}>
                 <span className="mode-number"><img src={`/guacharo-activo.png`} /></span><strong>GUÁCHARO ACTIVO</strong><small>Ruleta para Guácharo Activo de 77 animalitos</small><b>RULETA GUÁCHARO ACTIVO ↗</b>
               </button>
-              <button className="mode-card" onClick={() => setScreen("millonario")}>
-                <span className="mode-number"><img src={`/guacharito-millonario.png`} /></span><strong>GUACHARITO MILLONARIO</strong><small>Ruleta de Guacharito Millonario de 101 animalitos</small><b>GIRAR GUACHARITO MILLONARIO ↗</b>
+              <button className="mode-card" onClick={() => changeScreen("millonario")}>
+                <span className="mode-number"><img src={`/guacharito-millonario.png`} /></span><strong>GUACHARITO MILLONARIO</strong><small>Ruleta de Guacharito Millonario de 101 animalitos</small><b>RULETA GUACHARITO MILLONARIO ↗</b>
               </button>
             </div>
           </section>
@@ -811,7 +861,7 @@ export default function App() {
 
         {screen === "guacharo" && (
           <section className="guacharo-screen">
-            {/*<button className="back-mode" onClick={() => setScreen("selector")}>← VOLVER A TU SUERTE</button>*/}
+            {/*<button className="back-mode" onClick={() => changeScreen("selector")}>← VOLVER A TU SUERTE</button>*/}
             <section className="hero-grid guacharo-hero-grid">
               <aside className="side-card left-card">
                 <div className="side-icon">✦</div>
@@ -879,7 +929,7 @@ export default function App() {
 
               <aside className="side-card right-card">
                 <div className="side-title">✧ TU SUERTE ✧</div>
-                <button className="mini-mode-button" onClick={() => setScreen("selector")}>CAMBIAR RULETA</button>
+                <button className="mini-mode-button" onClick={() => changeScreen("selector")}>CAMBIAR RULETA</button>
                 <div className="feature"><span>✓</span><p><b>Juego recreativo</b><small>Selección aleatoria</small></p></div>
                 <div className="feature"><span>🏆</span><p><b>¡Mucha suerte!</b><small>Que gane tu favorito</small></p></div>
                 <div className="pot">🪙<span>LA FORTUNA<br />TE ESPERA</span></div>
@@ -890,7 +940,7 @@ export default function App() {
 
         {screen === "millonario" && (
           <section className="guacharo-screen millonario-screen">
-            {/*<button className="back-mode" onClick={() => setScreen("selector")}>← VOLVER A TU SUERTE</button>*/}
+            {/*<button className="back-mode" onClick={() => changeScreen("selector")}>← VOLVER A TU SUERTE</button>*/}
             <section className="hero-grid millonario-hero-grid">
               <aside className="side-card left-card"><div className="side-icon">✦</div><p className="script-copy">¡La fortuna<br />está en tus<br /><em>manos!</em></p><div className="side-rule" /><div className="coin-stack"><span>✿</span><span>✿</span><span>✿</span></div></aside>
               <section className="game-area" aria-label="Guacharito Millonario, 101 resultados posibles">
@@ -917,13 +967,13 @@ export default function App() {
                 <p className="spin-hint">{guacharoSpinning ? "GIRANDO · BUSCANDO EL NÚMERO GANADOR..." : "PRESIONA PARA INICIAR LA RULETA"}</p>
                 <section className="history-panel"><div className="history-title"><span>ÚLTIMOS RESULTADOS · GUACHARITO</span><small>HISTORIAL</small></div><div className="history-items">{millonarioHistory.length ? millonarioHistory.map((item, i) => <div className="history-chip" key={`${item.number}-${i}`}><span className="guacharo-history-animal">{item.number === "99" ? "🦉" : animalEmoji(item)}</span><b>{item.number}</b><small>{item.name}</small></div>) : <p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}</div></section>
               </section>
-              <aside className="side-card right-card"><div className="side-title">✧ TU SUERTE ✧</div><button className="mini-mode-button" onClick={() => setScreen("selector")}>CAMBIAR RULETA</button><div className="feature"><span>✓</span><p><b>101 resultados</b><small>Selección aleatoria</small></p></div><div className="feature"><span>🏆</span><p><b>99 · Guacharito</b><small>También puede ganar</small></p></div><div className="pot">🪙<span>LA FORTUNA<br />TE ESPERA</span></div></aside>
+              <aside className="side-card right-card"><div className="side-title">✧ TU SUERTE ✧</div><button className="mini-mode-button" onClick={() => changeScreen("selector")}>CAMBIAR RULETA</button><div className="feature"><span>✓</span><p><b>101 resultados</b><small>Selección aleatoria</small></p></div><div className="feature"><span>🏆</span><p><b>99 · Guacharito</b><small>También puede ganar</small></p></div><div className="pot">🪙<span>LA FORTUNA<br />TE ESPERA</span></div></aside>
             </section>
           </section>
         )}
 
         {screen === "lotto" && <>
-          {/*<div className="mode-toolbar"><button className="back-mode" onClick={() => setScreen("selector")}>← CAMBIAR MODALIDAD</button></div>*/}
+          {/*<div className="mode-toolbar"><button className="back-mode" onClick={() => changeScreen("selector")}>← CAMBIAR MODALIDAD</button></div>*/}
           <section className="hero-grid">
             <aside className="side-card left-card">
               <div className="side-icon">✦</div>
@@ -1004,7 +1054,7 @@ export default function App() {
 
             <aside className="side-card right-card">
               <div className="side-title">✧ TU SUERTE ✧</div>
-              <button className="mini-mode-button" onClick={() => setScreen("selector")}>CAMBIAR RULETA</button>
+              <button className="mini-mode-button" onClick={() => changeScreen("selector")}>CAMBIAR RULETA</button>
               <div className="feature"><span>✓</span><p><b>Juego recreativo</b><small>Selección aleatoria</small></p></div>
               {/*<div className="feature"><span>⚙</span><p><b>Ruleta clásica</b><small>Madera y latón</small></p></div>*/}
               <div className="feature"><span>🏆</span><p><b>¡Mucha suerte!</b><small>Que gane tu favorito</small></p></div>
@@ -1087,7 +1137,6 @@ export default function App() {
             <div className="winner-popup guacharo-winner-popup">
               <div className="winner-header">✦ ¡TENEMOS GANADOR! ✦</div>
               <div className="result-animal guacharo-winner-art">
-                <span>{animalEmoji(guacharoWinner)}</span>
                 <img src={`/animalitos/${animalAssetNumber(guacharoWinner.number)}.png`} alt={guacharoWinner.name} onError={(event) => { event.currentTarget.style.display = "none"; }} />
               </div>
               <div className="result-number winner-number">

@@ -1881,3 +1881,15 @@ footer i {
   height: 65px;
   object-fit: contain;
 }
+
+@media (min-width: 901px) {
+  .guacharo-screen {
+    width: min(70%);
+    /* 620px × 1.20 */
+  }
+
+  .millonario-wrap {
+    width: min(100%);
+    /* 700px × 1.20 */
+  }
+}
