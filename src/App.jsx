@@ -728,7 +728,7 @@ export default function App() {
       };
       const numberFill = guacharoColor(animal, ringName, index);
       const iconSize = ringName === "outer" ? 13 : 12;
-      const imageSize = ringName === "outer" ? 19 : 17;
+      const imageSize = ringName === "outer" ? 25 : 19;
       return (
         <g key={`${ringName}-${animal.number}`} className={guacharoLedIndex === (ringName === "outer" ? index : guacharoOuterAnimals.length + index) ? "guacharo-led-active" : ""}>
           {/* Casilla numerada: mismo acabado rojo, negro y verde de Lotto */}
