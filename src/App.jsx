@@ -728,7 +728,7 @@ export default function App() {
       };
       const numberFill = guacharoColor(animal, ringName, index);
       const iconSize = ringName === "outer" ? 13 : 12;
-      const imageSize = ringName === "outer" ? 25 : 19;
+      const imageSize = ringName === "outer" ? 19 : 17;
       return (
         <g key={`${ringName}-${animal.number}`} className={guacharoLedIndex === (ringName === "outer" ? index : guacharoOuterAnimals.length + index) ? "guacharo-led-active" : ""}>
           {/* Casilla numerada: mismo acabado rojo, negro y verde de Lotto */}
@@ -739,7 +739,7 @@ export default function App() {
             <text x={numberPoint.x} y={numberPoint.y + 3} textAnchor="middle" dominantBaseline="middle" className="guacharo-number">{animal.number}</text>
           </g>
           <text x={iconPoint.x} y={iconPoint.y + 4} textAnchor="middle" dominantBaseline="middle" className="guacharo-animal-icon" style={{ fontSize: iconSize }}>{animalEmoji(animal)}</text>
-          <image href={`/animalitos/${animalAssetNumber(animal.number)}.png`} x={iconPoint.x - imageSize / 2} y={iconPoint.y - imageSize / 2} width={imageSize} height={imageSize} preserveAspectRatio="xMidYMid meet" />
+          <image href={`/animalitos/${animalAssetNumber(animal.number)}.webp`} x={iconPoint.x - imageSize / 2} y={iconPoint.y - imageSize / 2} width={imageSize} height={imageSize} preserveAspectRatio="xMidYMid meet" />
         </g>
       );
     });
@@ -800,7 +800,7 @@ export default function App() {
           transform={`rotate(${center + 90} ${animalPoint.x} ${animalPoint.y})`}
         >
           <image
-            href={`/animalitos/${animal.number}.png`}
+            href={`/animalitos/${animal.number}.webp`}
             x={animalPoint.x - 15}
             y={animalPoint.y - 15}
             width="25"
@@ -1090,7 +1090,7 @@ export default function App() {
 
                 <div className="result-animal">
                   <img
-                    src={`/animalitos/${winner.number}.png`}
+                    src={`/animalitos/${winner.number}.webp`}
                     alt={winner.name}
                   />
                 </div>
@@ -1118,7 +1118,7 @@ export default function App() {
                 <div className="history-chip" key={`${item.number}-${i}`}>
                   <span>
                     <img
-                      src={`/animalitos/${item.number}.png`}
+                      src={`/animalitos/${item.number}.webp`}
                       alt={item.name}
                     />
                   </span>
@@ -1137,7 +1137,7 @@ export default function App() {
             <div className="winner-popup guacharo-winner-popup">
               <div className="winner-header">✦ ¡TENEMOS GANADOR! ✦</div>
               <div className="result-animal guacharo-winner-art">
-                <img src={`/animalitos/${animalAssetNumber(guacharoWinner.number)}.png`} alt={guacharoWinner.name} onError={(event) => { event.currentTarget.style.display = "none"; }} />
+                <img src={`/animalitos/${animalAssetNumber(guacharoWinner.number)}.webp`} alt={guacharoWinner.name} onError={(event) => { event.currentTarget.style.display = "none"; }} />
               </div>
               <div className="result-number winner-number">
                 <span>RESULTADO GANADOR · GUÁCHARO ACTIVO</span>
