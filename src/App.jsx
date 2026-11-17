@@ -844,7 +844,7 @@ export default function App() {
               <button className="mode-card" onClick={() => changeScreen("lotto")}>
                 <div className="mode-logos">
                   <span className="mode-number"><img src="/lotto-activo.webp" alt="Lotto Activo" /></span>
-                  <span className="mode-number"><img src="/guacharito-millonario.png" alt="Guácharo Activo" /></span>
+                  <span className="mode-number"><img src="/la-granjita.webp" alt="La Granjita" /></span>
                   <span className="mode-number"><img src="/selva-plus.webp" alt="Selva Plus" /></span>
                 </div>
                 <strong>LOTTO ACTIVO</strong><small>La ruleta clásica para Lotto Activo, La Granjita y Selva Plus de 38 animalitos</small><b>RULETA CLÁSICA ↗</b>
