@@ -1,3 +1,5 @@
+//App.jsx
+
 import { useEffect, useRef, useState } from "react";
 import Fireworks from "./Fireworks";
 
@@ -694,7 +696,16 @@ export default function App() {
       return <g key={`${ringName}-${animal.number}`} className={active ? "millonario-led-active" : ""}>
         <path d={`M ${a.x} ${a.y} A ${outerRadius} ${outerRadius} 0 0 1 ${b.x} ${b.y} L ${c.x} ${c.y} A ${innerRadius} ${innerRadius} 0 0 0 ${d.x} ${d.y} Z`} fill={fill} stroke="#e8c36c" strokeWidth="1.1" />
         <text x={numberPoint.x} y={numberPoint.y + 3} textAnchor="middle" dominantBaseline="middle" transform={`rotate(${middle + 90} ${numberPoint.x} ${numberPoint.y})`} className="millonario-number">{animal.number}</text>
-        <text x={iconPoint.x} y={iconPoint.y + 3} textAnchor="middle" dominantBaseline="middle" transform={`rotate(${middle + 90} ${iconPoint.x} ${iconPoint.y})`} className="millonario-animal">{animal.number === "0" || animal.number === "00" ? animalEmoji(animal) : (animal.number <= "75" ? animalEmoji(animal) : "🐾")}</text>
+        <image
+          href={`/animalitos/${animalAssetNumber(animal.number)}.webp`}
+          x={iconPoint.x - 10}
+          y={iconPoint.y - 10}
+          width="20"
+          height="20"
+          preserveAspectRatio="xMidYMid meet"
+          transform={`rotate(${middle + 90} ${iconPoint.x} ${iconPoint.y})`}
+          className="millonario-animal-image"
+        />
       </g>;
     });
   };
@@ -905,9 +916,17 @@ export default function App() {
                       <circle cx="300" cy="300" r="116" fill="url(#guacharoWood)" stroke="url(#guacharoGold)" strokeWidth="9" />
                       <circle cx="300" cy="300" r="105" fill="url(#guacharoWoodgrain)" stroke="#3c1b0a" strokeWidth="2" />
                       <circle cx="300" cy="300" r="96" fill="none" stroke="#d59b3a" strokeWidth="2" />
-                      <text x="300" y="275" textAnchor="middle" className="guacharo-center-kicker">GUÁCHARO</text>
-                      <text x="300" y="343" textAnchor="middle" className={`guacharo-center-number ${guacharoLedIndex === guacharoWheelAnimals.length ? "guacharo-center-led-active" : ""}`}>75</text>
-                      <path d="M 266 357 Q 300 373 334 357" fill="none" stroke="#e7c36c" strokeWidth="2" strokeLinecap="round" />
+                      <text x="300" y="280" textAnchor="middle" className={`guacharo-center-number ${guacharoLedIndex === guacharoWheelAnimals.length ? "guacharo-center-led-active" : ""}`}>75</text>
+                      <image
+                        href="/animalitos/75.webp"
+                        x="230"
+                        y="250"
+                        width="130"
+                        height="130"
+                        preserveAspectRatio="xMidYMid meet"
+                        className="millonario-mascot-image"
+                      />
+                      <text x="300" y="370" textAnchor="middle" className="guacharo-center-kicker">GUÁCHARO</text>
                       {Array.from({ length: 16 }, (_, i) => { const p = polar(281, i * 22.5); return <circle key={`guacharo-rivet-${i}`} cx={p.x} cy={p.y} r="3.2" fill="#f2cf76" stroke="#75410d" strokeWidth="1" />; })}
                     </svg>
                   </div>
@@ -920,7 +939,7 @@ export default function App() {
                   </button>
                   <span className="chevron">››</span>
                 </div>
-                <p className="spin-hint">{guacharoSpinning ? "GIRANDO · BUSCANDO EL NÚMERO GANADOR..." : "PRESIONA PARA INICIAR LA RULETA"}</p>
+                <p className="spin-hint">{millonarioSpinning ? "GIRANDO · BUSCANDO EL NÚMERO GANADOR..." : "PRESIONA PARA INICIAR LA RULETA"}</p>
                 <section className="history-panel">
                   <div className="history-title"><span>ÚLTIMOS RESULTADOS · GUÁCHARO</span><small>HISTORIAL</small></div>
                   <div className="history-items">{guacharoHistory.length ? guacharoHistory.map((item, i) => <div className="history-chip" key={`${item.number}-${i}`}><span className="guacharo-history-animal">{animalEmoji(item)}</span><b>{item.number}</b><small>{item.name}</small></div>) : <p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}</div>
@@ -956,7 +975,15 @@ export default function App() {
                     <circle cx="300" cy="300" r="111" fill="#173c25" stroke="#8c5d19" strokeWidth="4" />
                     <circle cx="300" cy="300" r="99" fill="#f2d78b" stroke="#fff0b4" strokeWidth="3" />
                     <text x="300" y="260" textAnchor="middle" className={`millonario-center-number ${millonarioLedIndex === 100 ? "millonario-center-led-active" : ""}`}>99</text>
-                    <text x="300" y="330" textAnchor="middle" className="millonario-mascot">🦉</text>
+                    <image
+                      href="/animalitos/99.webp"
+                      x="258"
+                      y="270"
+                      width="84"
+                      height="78"
+                      preserveAspectRatio="xMidYMid meet"
+                      className="millonario-mascot-image"
+                    />
                     <text x="300" y="360" textAnchor="middle" className="millonario-center-name">GUACHARITO</text>
                     <circle cx="300" cy="300" r="116" fill="none" stroke="#b21e28" strokeWidth="5" strokeDasharray="12 8" />
                     {Array.from({ length: 20 }, (_, i) => { const p = polar(280, i * 18); return <circle key={`mill-rivet-${i}`} cx={p.x} cy={p.y} r="2.8" fill="#fff0a0" stroke="#805116" />; })}
@@ -965,7 +992,7 @@ export default function App() {
                 <div className="spin-controls"><span className="chevron">‹‹</span><button className="spin-button" onClick={spinMillonario} disabled={millonarioSpinning}><span className={millonarioSpinning ? "button-spinner" : "button-arrow"}>{millonarioSpinning ? "◌" : "✦"}</span><span>{millonarioSpinning ? "RULETA EN MARCHA..." : "¡GIRA LA RULETA!"}</span><b>✦</b></button><span className="chevron">››</span></div>
                 {/*<p className="spin-hint">{millonarioSpinning ? "GIRANDO · BUSCANDO EL NÚMERO GANADOR..." : "0 · 00 · 01–98 EN LOS ANILLOS · 99 EN EL CENTRO"}</p>*/}
                 <p className="spin-hint">{guacharoSpinning ? "GIRANDO · BUSCANDO EL NÚMERO GANADOR..." : "PRESIONA PARA INICIAR LA RULETA"}</p>
-                <section className="history-panel"><div className="history-title"><span>ÚLTIMOS RESULTADOS · GUACHARITO</span><small>HISTORIAL</small></div><div className="history-items">{millonarioHistory.length ? millonarioHistory.map((item, i) => <div className="history-chip" key={`${item.number}-${i}`}><span className="guacharo-history-animal">{item.number === "99" ? "🦉" : animalEmoji(item)}</span><b>{item.number}</b><small>{item.name}</small></div>) : <p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}</div></section>
+                <section className="history-panel"><div className="history-title"><span>ÚLTIMOS RESULTADOS · GUACHARITO</span><small>HISTORIAL</small></div><div className="history-items">{millonarioHistory.length ? millonarioHistory.map((item, i) => <div className="history-chip" key={`${item.number}-${i}`}><span className="guacharo-history-animal"><img src={`/animalitos/${animalAssetNumber(item.number)}.webp`} alt={item.name} /></span><b>{item.number}</b><small>{item.name}</small></div>) : <p className="empty-history">Tus resultados aparecerán aquí después del primer giro.</p>}</div></section>
               </section>
               <aside className="side-card right-card"><div className="side-title">✧ TU SUERTE ✧</div><button className="mini-mode-button" onClick={() => changeScreen("selector")}>CAMBIAR RULETA</button><div className="feature"><span>✓</span><p><b>101 resultados</b><small>Selección aleatoria</small></p></div><div className="feature"><span>🏆</span><p><b>99 · Guacharito</b><small>También puede ganar</small></p></div><div className="pot">🪙<span>LA FORTUNA<br />TE ESPERA</span></div></aside>
             </section>
@@ -1154,7 +1181,7 @@ export default function App() {
             <Fireworks />
             <div className="winner-popup guacharo-winner-popup millonario-winner-popup">
               <div className="winner-header">✦ ¡TENEMOS GANADOR! ✦</div>
-              <div className="result-animal guacharo-winner-art"><span>{millonarioWinner.number === "99" ? "🦉" : animalEmoji(millonarioWinner)}</span></div>
+              <div className="result-animal guacharo-winner-art millonario-winner-art"><img src={`/animalitos/${animalAssetNumber(millonarioWinner.number)}.webp`} alt={millonarioWinner.name} /></div>
               <div className="result-number winner-number"><span>RESULTADO GANADOR · GUACHARITO MILLONARIO</span><strong>{millonarioWinner.number}</strong><b>{millonarioWinner.name}</b></div>
               <div className="result-message"><span>✦</span><p>¡La suerte está de tu lado!</p><Clover className="result-clover" /></div>
             </div>
